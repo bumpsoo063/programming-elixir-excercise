@@ -70,6 +70,7 @@ defmodule Ch10 do
     Enum.map(orders, &tax_apply(tax_rates, &1))
   end
 
+  defp tax_apply(tax, value)
   defp tax_apply(%{NC: nc}, %{ship_to: place} = value) when place == :NC  do
     Map.put(value, :total_amount, value[:net_amount] * nc + value[:net_amount])
   end
