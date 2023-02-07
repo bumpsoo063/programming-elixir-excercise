@@ -65,4 +65,16 @@ defmodule Ch10 do
   defp is_prime(n, index) when index < n and rem(n, index) != 0, do: is_prime(n, index + 1)
   defp is_prime(n, index) when index < n and rem(n, index) == 0, do: true
   defp is_prime(_, _), do: false
+
+  def tax(tax_rates, orders) do
+    Enum.map(orders, &tax_apply(tax_rates, &1))
+  end
+
+  defp tax_apply(%{NC: nc}, %{ship_to: place} = value) when place == :NC  do
+    Map.put(value, :total_amount, value[:net_amount] * nc + value[:net_amount])
+  end
+  defp tax_apply(%{TX: tx}, %{ship_to: place} = value) when place == :TX  do
+    Map.put(value, :total_amount, value[:net_amount] * tx + value[:net_amount])
+  end
+  defp tax_apply(_, value), do: value
 end
